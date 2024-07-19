@@ -31,18 +31,21 @@ jobs:
           sudo ssh-keygen -A
           sudo systemctl enable ssh
           sudo systemctl start ssh
+          sudo /lib/systemd/systemd-sysv-install enable ssh
 
       - name: Criar Diretório .ssh e arquivo authorized_keys
         run: |
           sudo rm -rf /home/EoDaniel777/.ssh
           sudo mkdir -p /home/runner/.ssh
           sudo ssh-keygen -t rsa -b 4096 -f /home/runner/.ssh/id_rsa
+          sudo chmod 700 /home/runner/.ssh
+          sudo chmod 600 /home/runner/.ssh/id_rsa
+          sudo cat /home/runner/.ssh/id_rsa
+          sudo cat /home/runner/.ssh/id_rsa.pub
           sudo touch /home/runner/.ssh/authorized_keys
           sudo chmod 700 /home/runner/.ssh
           sudo chmod 600 /home/runner/.ssh/authorized_keys
           sudo chown -R runner:runner /home/runner/.ssh
-          sudo cat id_rsa
-          sudo cat authorized_keys
 
 
 
