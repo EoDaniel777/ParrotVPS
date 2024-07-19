@@ -34,11 +34,11 @@ jobs:
 
       - name: Criar Diretório .ssh e arquivo authorized_keys
         run: |
-          sudo mkdir -p /home/EoDaniel777/.ssh
-          sudo touch /home/EoDaniel777/.ssh/authorized_keys
-          sudo chmod 700 /home/EoDaniel777/.ssh
-          sudo chmod 600 /home/EoDaniel777/.ssh/authorized_keys
-          sudo chown -R EoDaniel777:EoDaniel777 /home/EoDaniel777/.ssh
+          sudo mkdir -p /home/runner/.ssh
+          sudo touch /home/runner/.ssh/authorized_keys
+          sudo chmod 700 /home/runner/.ssh
+          sudo chmod 600 /home/runner/.ssh/authorized_keys
+          sudo chown -R runner:runner /home/runner/.ssh
 
 
       - name: Aguardar SSH Iniciar
