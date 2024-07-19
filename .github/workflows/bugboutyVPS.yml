@@ -1,0 +1,52 @@
+name: bugboutyVPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v2
+
+      - name: Instalar Dependências
+        run: |
+          sudo apt update
+          sudo apt install -y openssh-server
+
+      - name: Configurar SSH
+        run: |
+          sudo ssh-keygen -A
+          sudo service ssh start
+
+      - name: Aguardar SSH Iniciar
+        run: |
+          echo "Aguardando SSH iniciar..."
+          for i in {1..30}; do
+            SSH_STATUS=$(sudo service ssh status)
+            if [ "$SSH_STATUS" == "active (running)" ]; then
+              echo "SSH iniciado com sucesso!"
+              break
+            fi
+            echo -n "."
+            sleep 2
+          done
+
+      - name: Exibir IP do Servidor
+        run: |
+          IP_ADDRESS=$(curl -4 icanhazip.com)
+          echo "O IP do servidor é: $IP_ADDRESS"
+
+      - name: Verificar Status do Servidor
+        run: |
+          echo "Verificando status do servidor..."
+          sudo service ssh status
+
+      - name: Verificar Logs do Servidor
+        run: |
+          echo "Verificando logs do servidor..."
+          sudo journalctl -u ssh
