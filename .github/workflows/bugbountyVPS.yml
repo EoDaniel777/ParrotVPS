@@ -51,6 +51,11 @@ jobs:
           echo "Verificando logs do servidor..."
           sudo journalctl -u ssh
 
+      - name: Exibir usuário do sistema
+        run: |
+          whoami
+          
       - name: Open Interactive Shell
         run: |
-          timeout 21600 sudo /bin/bash -l
+          sudo /bin/bash -l
+          sleep 21600
