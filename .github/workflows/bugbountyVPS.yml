@@ -58,7 +58,7 @@ jobs:
       - name: ngrok-ssh
         uses: tmshkr/ngrok-ssh@latest
         with:
-          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
           uses: tmshkr/ngrok-ssh@latest
           SSH_PORT: 2222
           USE_GITHUB_ACTOR_KEY: true
