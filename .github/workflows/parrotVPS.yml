@@ -31,8 +31,12 @@ jobs:
 
       - name: Exibir IP do Container
         run: |
-          CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' parrot)
+          CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' parrot)
+          echo "CONTAINER_IP variable: $CONTAINER_IP"
           echo "O IP do container é: $CONTAINER_IP"
+
+      - name: Verificar Container
+        run: docker exec -it parrot /bin/bash -c "echo 'INICIANDO O PARROT!'"
 
       - name: Verificar Status do Container
         run: docker ps
