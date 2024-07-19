@@ -76,6 +76,7 @@ jobs:
           SSH_PORT: 2222
           USE_GITHUB_ACTOR_KEY: true
           WAIT_FOR_CONNECTION: false
+          NGROK_CONFIG_FILE: "ngrok.yml"
 
       - name: Open Interactive Shell
         run: |
