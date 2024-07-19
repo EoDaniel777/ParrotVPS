@@ -54,8 +54,18 @@ jobs:
       - name: Exibir usuário do sistema
         run: |
           whoami
-          
+
+      - name: ngrok-ssh
+        uses: tmshkr/ngrok-ssh@latest
+        with:
+          NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+          SSH_PORT: 2222
+          USE_GITHUB_ACTOR_KEY: true
+          WAIT_FOR_CONNECTION: false
+          NGROK_CONFIG_FILE: "ngrok.yml"
+
       - name: Open Interactive Shell
         run: |
           sudo /bin/bash -l
-          sleep 21600
+          tty
+          sleep 3600
