@@ -34,8 +34,8 @@ jobs:
 
       - name: Criar Diretório .ssh e arquivo authorized_keys
         run: |
-          mkdir -p /home/EoDaniel777/.ssh
-          touch /home/EoDaniel777/.ssh/authorized_keys
+          sudo mkdir -p /home/EoDaniel777/.ssh
+          sudo touch /home/EoDaniel777/.ssh/authorized_keys
           chmod 700 /home/EoDaniel777/.ssh
           chmod 600 /home/EoDaniel777/.ssh/authorized_keys
           chown -R EoDaniel777:EoDaniel777 /home/EoDaniel777/.ssh
