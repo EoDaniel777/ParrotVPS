@@ -16,25 +16,39 @@ jobs:
       - name: Instalar Dependências
         run: |
           sudo apt update
-          sudo apt install -y openssh-server
+          sudo apt install -y openssh-server ngrok
 
       - name: Configurar SSH
         run: |
           sudo ssh-keygen -A
-          sudo service ssh start
+          sudo systemctl enable ssh
+          sudo systemctl start ssh
+
+      - name: Criar Diretório .ssh e arquivo authorized_keys
+        run: |
+          mkdir -p /home/EoDaniel777/.ssh
+          touch /home/EoDaniel777/.ssh/authorized_keys
+          chmod 700 /home/EoDaniel777/.ssh
+          chmod 600 /home/EoDaniel777/.ssh/authorized_keys
+          chown -R EoDaniel777:EoDaniel777 /home/EoDaniel777/.ssh
 
       - name: Aguardar SSH Iniciar
         run: |
           echo "Aguardando SSH iniciar..."
           for i in {1..30}; do
-            SSH_STATUS=$(sudo service ssh status)
-            if [ "$SSH_STATUS" == "active (running)" ]; then
+            SSH_STATUS=$(sudo systemctl is-active ssh)
+            if [ "$SSH_STATUS" == "active" ]; then
               echo "SSH iniciado com sucesso!"
               break
             fi
             echo -n "."
             sleep 2
           done
+
+          if [ "$SSH_STATUS" != "active" ]; then
+            echo "Erro: SSH não conseguiu iniciar após várias tentativas."
+            exit 1
+          fi
 
       - name: Exibir IP do Servidor
         run: |
@@ -44,16 +58,16 @@ jobs:
       - name: Verificar Status do Servidor
         run: |
           echo "Verificando status do servidor..."
-          sudo service ssh status
+          sudo systemctl status ssh | tee ssh_status.log
 
       - name: Verificar Logs do Servidor
         run: |
           echo "Verificando logs do servidor..."
-          sudo journalctl -u ssh
+          sudo journalctl -u ssh | tee ssh_logs.log
 
       - name: Exibir usuário do sistema
         run: |
-          whoami
+          whoami | tee user_info.log
 
       - name: ngrok-ssh
         uses: tmshkr/ngrok-ssh@latest
@@ -62,7 +76,6 @@ jobs:
           SSH_PORT: 2222
           USE_GITHUB_ACTOR_KEY: true
           WAIT_FOR_CONNECTION: false
-          NGROK_CONFIG_FILE: "ngrok.yml"
 
       - name: Open Interactive Shell
         run: |
