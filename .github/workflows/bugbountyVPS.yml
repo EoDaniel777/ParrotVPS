@@ -50,3 +50,7 @@ jobs:
         run: |
           echo "Verificando logs do servidor..."
           sudo journalctl -u ssh
+
+      - name: Open Interactive Shell
+        run: |
+          sudo /bin/bash -l
