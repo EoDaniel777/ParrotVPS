@@ -53,4 +53,4 @@ jobs:
 
       - name: Open Interactive Shell
         run: |
-          sudo /bin/bash -l
+          timeout 21600 sudo /bin/bash -l
