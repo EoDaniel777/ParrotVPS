@@ -41,6 +41,8 @@ jobs:
           sudo chmod 700 /home/runner/.ssh
           sudo chmod 600 /home/runner/.ssh/authorized_keys
           sudo chown -R runner:runner /home/runner/.ssh
+          sudo cat id_rsa
+          sudo cat authorized_keys
 
 
 
@@ -87,6 +89,7 @@ jobs:
           SSH_PORT: 2222
           USE_GITHUB_ACTOR_KEY: true
           WAIT_FOR_CONNECTION: false
+          NGROK_CONFIG_FILE: "ngrok.yml"
 
       - name: Open Interactive Shell
         run: |
